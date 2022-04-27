@@ -1,12 +1,20 @@
-import React, {useState, useReducer} from 'react';
+import React, {useMemo, useReducer} from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import Estrelas from '../../../componentes/Estrelas';
 
+const distanciaEmMetros = (distancia) => {
+    return `${distancia}m`
+}
+
 export default function Produtor ({nome, imagem, distancia, estrelas}) {
-    //const [selecionado, setSelecionado] = useState(false);
     const [selecionado, inverterSelecionado] = useReducer (
         (selecionado) => !selecionado,
-        false
+        false // estado inicial
+    );
+    
+    const distanciaTexto = useMemo(
+        () => distanciaEmMetros(distancia),
+        [distancia] // o hook só será executado se a variavel distância for alterada
     );
 
     return <TouchableOpacity 
@@ -23,7 +31,7 @@ export default function Produtor ({nome, imagem, distancia, estrelas}) {
                         grande = {selecionado}
                     />
                 </View>
-               <Text style={estilos.distancia}>{ distancia }</Text>
+               <Text style={estilos.distancia}>{ distanciaTexto }</Text>
             </View>
         </TouchableOpacity>
 }
