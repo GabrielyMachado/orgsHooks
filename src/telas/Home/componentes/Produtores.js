@@ -7,6 +7,8 @@ import useProdutores from '../../../hooks/useProdutores';
 export default function Produtores ( { topo: Topo}) {
     const [titulo, lista] = useProdutores();
 
+    const listaOrdenadaDistancia = lista.sort((a, b) => a.distancia - b.distancia);
+
     const TopoLista = () => {
         return <>
             <Topo />
@@ -15,7 +17,7 @@ export default function Produtores ( { topo: Topo}) {
     }
 
     return <FlatList
-        data = {lista}
+        data = {listaOrdenadaDistancia}
         renderItem = {({item}) => <Produtor {...item}/> }
         keyExtractor = { ({nome}) => nome }
         ListHeaderComponent = {TopoLista}/>
